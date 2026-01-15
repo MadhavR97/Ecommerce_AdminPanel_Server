@@ -3,6 +3,7 @@ const route = express.Router();
 const { AddUser, LoginUser, ForgotPassword, verifyOTP, resetPassword, GetUsers, EditUser, DeleteUser } = require('../controllers/AuthCtl');
 const { AddProduct, GetProduct, DeleteProduct, UpdateProduct, GetProductById } = require('../controllers/productCtl');
 const { AddToCart, GetCart, UpdateCart, DeleteCartItem } = require('../controllers/cartCtl');
+const { AiAssistant } = require('../controllers/AiAssistant');
 const upload = require('../middleware/upload');
 
 // User Auth Route
@@ -29,5 +30,7 @@ route.delete('/cart/delete/:productId', DeleteCartItem)
 route.post('/forgotPassword', ForgotPassword)
 route.post('/otpVerification', verifyOTP)
 route.post('/resetPassword', resetPassword)
+
+route.post('/chat/completions', AiAssistant)
 
 module.exports = route;
