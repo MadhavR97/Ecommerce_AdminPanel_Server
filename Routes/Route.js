@@ -32,6 +32,6 @@ route.post('/otpVerification', verifyOTP)
 route.post('/resetPassword', resetPassword)
 
 // Ai Assistant Route
-route.post('/chat', AiAssistant)
+route.post('/aiAssistant', AiAssistant);
 
 module.exports = route;
