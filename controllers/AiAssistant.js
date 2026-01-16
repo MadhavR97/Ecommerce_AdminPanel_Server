@@ -4,7 +4,7 @@ const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
 module.exports.AiAssistant = async (req, res) => {
     try {
-        const { message } = req.body;
+        const { message, model } = req.body;
 
         if (!message) {
             return res.status(400).json({
@@ -14,7 +14,7 @@ module.exports.AiAssistant = async (req, res) => {
         }
 
         const response = await axios.post(`https://openrouter.ai/api/v1/chat/completions`, {
-            model: "openai/gpt-4o-mini",
+            model,
             messages: [
                 {
                     role: "user",
@@ -30,8 +30,7 @@ module.exports.AiAssistant = async (req, res) => {
             }
         );
 
-        // const aiReply = response.data.choices[0].message.content;
-        const aiReply = response.data.choices;
+        const aiReply = response.data.choices[0].message.content;
 
         res.status(200).json({
             success: true,
