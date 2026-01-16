@@ -37,36 +37,6 @@ module.exports.AiAssistant = async (req, res) => {
             success: true,
             reply: aiReply
         })
-
-        console.log(aiReply)
-
-        // const response = await axios.post(
-        //     "https://openrouter.ai/api/v1/chat/completions",
-        //     {
-        //         model: "openai/gpt-4o-mini",
-        //         messages: [
-        //             {
-        //                 role: "user",
-        //                 content: userMessage
-        //             }
-        //         ],
-        //         max_tokens: 1000
-        //     },
-        //     {
-        //         headers: {
-        //             Authorization: `Bearer ${OPENROUTER_API_KEY}`,
-        //             "Content-Type": "application/json"
-        //         }
-        //     }
-        // );
-
-        // const aiReply = response.data.choices[0].message.content;
-
-        // res.status(200).json({
-        //     success: true,
-        //     reply: aiReply
-        // });
-
     } catch (error) {
         console.error("Error in AiAssistant:", error.response?.data || error.message);
 

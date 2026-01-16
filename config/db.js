@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const connectDB = async () => {
   try {
-    const local = false;
+    const local = true;
 
     if (local) {
       await mongoose.connect(process.env.LOCAL_MONGODB_URL);
