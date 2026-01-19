@@ -8,7 +8,7 @@ const connectDB = async () => {
       await mongoose.connect(process.env.LOCAL_MONGODB_URL);
     }
     else {
-      await mongoose.connect(process.env.MONGODB_URI);
+      await mongoose.connect(process.env.ATLAS_MONGODB_URI);
     }
     console.log("MongoDB connected successfully");
   } catch (error) {
