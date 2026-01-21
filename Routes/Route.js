@@ -8,7 +8,7 @@ const upload = require('../middleware/upload');
 const verifyToken = require('../middleware/verifyToken')
 
 // User Auth Route
-route.post('/AddUser', verifyToken, AddUser)
+route.post('/AddUser', AddUser)
 route.put('/updateUser/:id', verifyToken, EditUser)
 route.delete('/deleteUser/:id', verifyToken, DeleteUser)
 route.post('/loginUser', LoginUser)

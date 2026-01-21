@@ -1,6 +1,7 @@
 const userSchema = require('../model/userSchema')
 const mailer = require('../middleware/mailer')
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs')
 
 // Create Admin / User
 module.exports.AddUser = async (req, res) => {
@@ -11,7 +12,8 @@ module.exports.AddUser = async (req, res) => {
             return res.status(500).json({ message: 'User already exist' })
         }
         else {
-            const user = await userSchema.create(req.body)
+            const hassedPassword = await bcrypt.hash(req.body.password, 10)
+            const user = await userSchema.create({ ...req.body, password: hassedPassword })
             return res.status(200).json({ message: 'User Created Successfully', user })
         }
     }
@@ -64,11 +66,12 @@ module.exports.LoginUser = async (req, res) => {
             return res.status(500).json({ message: 'User not exist' })
         }
         else {
-            if (existUser.password !== req.body.password) {
-                return res.status(500).json({ message: 'Password not matched' })
+            const isMatch = await bcrypt.compare(req.body.password, existUser.password)
+            if (!isMatch) {
+                return res.status(500).json({ message: 'Password is incorrect' })
             }
             else {
-                const token = jwt.sign({ id: existUser._id, }, process.env.JWT_SECRET, { expiresIn: '1d' })
+                const token = jwt.sign({ id: existUser._id }, process.env.JWT_SECRET, { expiresIn: '1d' })
                 return res.status(200).json({ message: 'Login Successfully', existUser, token })
             }
         }
@@ -158,7 +161,8 @@ module.exports.resetPassword = async (req, res) => {
 
         if (user) {
             if (newPassword === confirmPassword) {
-                user.password = newPassword
+                const hassedPassword = await bcrypt.hash(newPassword, 10)
+                user.password = hassedPassword
                 user.resetOtp = null
                 user.resetOtpExpiry = null
 
