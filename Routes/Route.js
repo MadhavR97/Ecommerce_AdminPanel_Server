@@ -33,6 +33,6 @@ route.post('/otpVerification', verifyOTP)
 route.post('/resetPassword', resetPassword)
 
 // Ai Assistant Route
-route.post('/aiAssistant', AiAssistant);
+route.post('/aiAssistant', verifyToken, AiAssistant);
 
 module.exports = route;
