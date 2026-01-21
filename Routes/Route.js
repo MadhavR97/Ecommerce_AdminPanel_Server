@@ -5,26 +5,27 @@ const { AddProduct, GetProduct, DeleteProduct, UpdateProduct, GetProductById } =
 const { AddToCart, GetCart, UpdateCart, DeleteCartItem } = require('../controllers/cartCtl');
 const { AiAssistant } = require('../controllers/AiAssistant');
 const upload = require('../middleware/upload');
+const verifyToken = require('../middleware/verifyToken')
 
 // User Auth Route
-route.post('/AddUser', AddUser)
-route.put('/updateUser/:id', EditUser)
-route.delete('/deleteUser/:id', DeleteUser)
+route.post('/AddUser', verifyToken, AddUser)
+route.put('/updateUser/:id', verifyToken, EditUser)
+route.delete('/deleteUser/:id', verifyToken, DeleteUser)
 route.post('/loginUser', LoginUser)
-route.get('/getUsers', GetUsers)
+route.get('/getUsers', verifyToken, GetUsers)
 
 // Product Route
-route.post('/products', upload, AddProduct)
+route.post('/products', verifyToken, upload, AddProduct)
 route.get('/products', GetProduct)
-route.delete('/products/:id', DeleteProduct)
-route.get('/products/:id', GetProductById)
-route.put('/products/:id', upload, UpdateProduct)
+route.delete('/products/:id', verifyToken, DeleteProduct)
+route.get('/products/:id', verifyToken, GetProductById)
+route.put('/products/:id', verifyToken, upload, UpdateProduct)
 
 // Cart Route
-route.post('/cart', AddToCart)
-route.get('/cart/:userId', GetCart)
-route.put('/cart/update', UpdateCart)
-route.delete('/cart/delete/:productId', DeleteCartItem)
+route.post('/cart', verifyToken, AddToCart)
+route.get('/cart/:userId', verifyToken, GetCart)
+route.put('/cart/update', verifyToken, UpdateCart)
+route.delete('/cart/delete/:productId', verifyToken, DeleteCartItem)
 
 // Forgot Password Route
 route.post('/forgotPassword', ForgotPassword)

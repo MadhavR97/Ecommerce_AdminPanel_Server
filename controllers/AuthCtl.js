@@ -1,5 +1,6 @@
 const userSchema = require('../model/userSchema')
 const mailer = require('../middleware/mailer')
+const jwt = require('jsonwebtoken');
 
 // Create Admin / User
 module.exports.AddUser = async (req, res) => {
@@ -67,7 +68,8 @@ module.exports.LoginUser = async (req, res) => {
                 return res.status(500).json({ message: 'Password not matched' })
             }
             else {
-                return res.status(200).json({ message: 'Login Successfully', existUser })
+                const token = jwt.sign({ id: existUser._id, }, process.env.JWT_SECRET, { expiresIn: '1d' })
+                return res.status(200).json({ message: 'Login Successfully', existUser, token })
             }
         }
     }
